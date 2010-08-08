@@ -58,7 +58,7 @@ def add_entry(agent, data)
   form = agent.page.forms.first
 
   form['entry.title'] = data[:title].to_s
-  form['entry.date'] = Date.today.to_s
+  form['entry.date'] = data[:date].to_s
   form['selectedBankAccount'] = data[:account_id].to_s
   form['entry.entryCategory.id'] = data[:category_id].to_s
   form['entry.amount'] = data[:amount].to_s
@@ -78,6 +78,10 @@ def get_data(agent)
 
   data = {}
   data[:title] = ask('Nazwa')
+
+  curr_date = Date.today
+  data[:date] = ask("Data (#{curr_date})")
+  data[:date] = curr_date.to_s if data[:date].empty?
 
   data[:account_id] = nil
   choose do |menu|
