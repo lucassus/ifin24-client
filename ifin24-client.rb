@@ -57,7 +57,7 @@ def get_entry(client)
     end
   end
 
-  entry.amount = ask('Kwota')
+  entry.amount = eval ask('Kwota')
   entry.tags = ask('Tagi')
   entry.note = ask('Opis')
 
