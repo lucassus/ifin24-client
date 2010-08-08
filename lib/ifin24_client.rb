@@ -90,7 +90,7 @@ class Ifin24Client
       entry.date = date_column.text.strip
 
       category_column = entry_element[3]
-      entry.category_name = category_column.children[0].text.strip
+      entry.subcategory_name = category_column.children[0].text.strip
       entry.tags = category_column.search('span').text.strip
 
       amount_column = entry_element[4]

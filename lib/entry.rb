@@ -23,4 +23,8 @@ class Entry
     return result
   end
 
+  def category_full_name
+    "#{category_name} / #{subcategory_name}"
+  end
+
 end
