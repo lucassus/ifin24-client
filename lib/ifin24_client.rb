@@ -72,28 +72,28 @@ class Ifin24Client
 
   def fetch_list
     @agent.get(LIST_URL)
-    entries_element = @agent.page.search('table tbody tr')
+    entry_row_elements = @agent.page.search('table tbody tr')
 
     entries = []
 
-    entries_element.each do |entry_element|
-      entry_element = entry_element.search('td')
-      next if entry_element.size != 5
+    entry_row_elements.each do |entry_row_element|
+      entry_elements = entry_row_element.search('td')
+      next if entry_elements.size != 5
 
       entry = Entry.new
 
-      title_column = entry_element[2]
+      title_column = entry_elements[2]
       entry.title = title_column.children[0].text.strip
       entry.note = title_column.search('span').text.strip
 
-      date_column = entry_element[1]
+      date_column = entry_elements[1]
       entry.date = date_column.text.strip
 
-      category_column = entry_element[3]
+      category_column = entry_elements[3]
       entry.subcategory_name = category_column.children[0].text.strip
       entry.tags = category_column.search('span').text.strip
 
-      amount_column = entry_element[4]
+      amount_column = entry_elements[4]
       entry.amount = amount_column.text.strip
 
       entries << entry
