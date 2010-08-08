@@ -68,6 +68,7 @@ def add_entry(agent, data)
   form['selectedBankAccount'] = data[:account_id].to_s
   form['entry.entryCategory.id'] = data[:subcategory_id].to_s
   form['entry.amount'] = data[:amount].to_s
+  form['value'] = data[:tags].to_s
   form['entry.note'] = data[:note].to_s
 
   form.submit
@@ -124,6 +125,7 @@ def get_data(agent)
   end
 
   data[:amount] = ask('Kwota')
+  data[:tags] = ask('Tagi')
   data[:note] = ask('Opis')
 
   return data
@@ -133,9 +135,10 @@ def print_data(data)
   puts "=" * 16
   puts "Nazwa: #{data[:title]}"
   puts "Data: #{data[:date]}"
-  puts "Rachunek #{data[:account_name]}"
+  puts "Rachunek: #{data[:account_name]}"
   puts "Kwota: #{data[:amount]}"
   puts "Kategoria: #{data[:category_name]} / #{data[:subcategory_name]}"
+  puts "Tagi: #{data[:tags]}"
   puts "Opis: #{data[:note]}"
   puts "=" * 16
 end
@@ -163,7 +166,7 @@ def main
       menu.layout = :menu_only
       menu.shell  = true
 
-      menu.choices(:dodaj, :add) do
+      menu.choices(:dodaj, :add, :a) do
         data = get_data(agent)
         print_data(data)
         if agree("Dane poprawne?")
@@ -179,4 +182,4 @@ def main
   end
 end
 
-main()
+main
