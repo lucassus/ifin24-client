@@ -1,11 +1,13 @@
+#!/usr/bin/env ruby
+
 require 'rubygems'
 require 'bundler'
 Bundler.setup
 
+require 'yaml'
 require 'mechanize'
 require 'highline/import'
 
-# Login
 def login(agent, login, password)
   agent.get('https://www.ifin24.pl/logowanie')
   login_form = agent.page.forms.first
@@ -118,9 +120,15 @@ def get_data(agent)
   return data
 end
 
+def load_config
+  file_name = File.join(File.expand_path(File.dirname(__FILE__)), 'config.yml')
+  YAML.load_file(file_name) rescue {}
+end
+
 def main
   agent = Mechanize.new
-  login(agent, 'ifin24_console', 'ifin24_console')
+  config = load_config
+  login(agent, config[:login], config[:password])
   data = get_data(agent)
   add_entry(agent, data)
 end
