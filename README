@@ -1,0 +1,60 @@
+Sample session:
+
+ruby-1.9.1-p378$ ./ifin24-client.rb
+a) dodaj
+b) koniec
+?  a
+Nazwa
+Obiad w Panoramie
+Data (2010-08-08)
+
+1. Gotówka / -16 592,88 PLN
+2. Konto 1 / -286,00 PLN
+3. Konto 2 / -2 453,99 PLN
+Wybierz rachunek
+1
+1. Dom
+2. Bieżące wydatki
+3. Multimedia
+4. Transport
+5. Odzież i dodatki
+6. Dla innych
+7. Sport
+8. Edukacja
+9. Zdrowie/Ubezpieczenia
+10. Rozrywka/ Wypoczynek
+11. Zainteresowania
+12. Zobowiązania finansowe
+13. Inwestycje
+14. Transfer środków
+Wybierz kategorię
+2
+1. Żywność
+2. Stołówka/ posiłki poza domem
+3. Kosmetyki i Chemia
+4. Fryzjer/ kosmetyczka
+5. Alkohol
+6. Papierosy
+Wybierz podkategorię
+2
+Kwota
+15
+Tagi
+obiad, panorama
+Opis
+
+================
+Nazwa: Obiad w Panoramie
+Data: 2010-08-08
+Rachunek: Gotówka / -16 592,88 PLN
+Kwota: 15
+Kategoria: Bieżące wydatki / Stołówka/ posiłki poza domem
+Tagi: obiad, panorama
+Opis:
+================
+Dane poprawne?
+y
+Wysyłanie danych...
+a) dodaj
+b) koniec
+?  b
