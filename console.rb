@@ -89,15 +89,22 @@ def get_data(agent)
 
   end
 
-  #category_id = ask('Kategoria', Integer)
-  data[:category_id] = nil
+  sub_categories = {}
   choose do |menu|
     menu.prompt = 'Wybierz kategorie'
 
-    categories.each do |name, sub_categories|
-      sub_categories.each do |name, id|
-        menu.choice(name) { data[:category_id] = id }
-      end
+    categories.each do |name, sub|
+      menu.choice(name) { sub_categories = sub }
+    end
+  end
+
+
+  data[:category_id] = nil
+  choose do |menu|
+    menu.prompt = 'Wybierz podkategorie'
+
+    sub_categories.each do |name, id|
+      menu.choice(name) { data[:category_id] = id }
     end
   end
 
