@@ -84,6 +84,11 @@ def add_entry(client)
   end
 end
 
+def list(client)
+  list = client.fetch_list
+  pp list
+end
+
 def main
   config = load_config
   client = Ifin24Client.new(config[:login], config[:password])
@@ -96,6 +101,10 @@ def main
 
       menu.choice(:dodaj) do
         add_entry(client)
+      end
+
+      menu.choice(:lista) do
+        list(client)
       end
 
       menu.choice(:koniec) do

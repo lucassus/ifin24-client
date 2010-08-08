@@ -2,6 +2,7 @@ class Ifin24Client
 
   LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
   ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
+  LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'
 
   def initialize(login, password)
     @login = login
@@ -67,6 +68,38 @@ class Ifin24Client
     form['entry.note'] = entry.note.to_s
 
     form.submit
+  end
+
+  def fetch_list
+    @agent.get(LIST_URL)
+    entries_element = @agent.page.search('table tbody tr')
+
+    entries = []
+
+    entries_element.each do |entry_element|
+      entry_element = entry_element.search('td')
+      next if entry_element.size != 5
+
+      entry = Entry.new
+
+      title_column = entry_element[2]
+      entry.title = title_column.children[0].text.strip
+      entry.note = title_column.search('span').text.strip
+
+      date_column = entry_element[1]
+      entry.date = date_column.text.strip
+
+      category_column = entry_element[3]
+      entry.category_name = category_column.children[0].text.strip
+      entry.tags = category_column.search('span').text.strip
+
+      amount_column = entry_element[4]
+      entry.amount = amount_column.text.strip
+
+      entries << entry
+    end
+
+    return entries
   end
 
   private
