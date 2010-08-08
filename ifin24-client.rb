@@ -127,15 +127,15 @@ def main
       menu.index_suffix = ") "
       menu.shell = true
 
-      menu.choice(:dodaj) do
+      menu.choice("Dodaj wydatek") do
         add_entry(client)
       end
 
-      menu.choice(:lista) do
+      menu.choice("Lista transakcji") do
         list(client)
       end
 
-      menu.choice(:koniec) do
+      menu.choice("Koniec") do
         exit
       end
     end

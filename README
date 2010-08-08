@@ -1,18 +1,17 @@
 Sample session:
 
 ruby-1.9.1-p378$ ./ifin24-client.rb
-a) dodaj
-b) koniec
+a) Dodaj wydatek
+b) Lista transakcji
+c) Koniec
 ?  a
-Nazwa
-Obiad w Panoramie
-Data (2010-08-08)
-
-1. Gotówka / -16 592,88 PLN
-2. Konto 1 / -286,00 PLN
-3. Konto 2 / -2 453,99 PLN
-Wybierz rachunek
-1
+Nazwa: Obiad
+Data: |2010-08-08|
+1. eKONTO / 50 PLN
+2. Gotówka / 100 PLN
+3. Konto oszczędnościowe / 3 000 PLN
+4. PKO Bank Polski / 2 000,00 PLN
+Wybierz rachunek: 2
 1. Dom
 2. Bieżące wydatki
 3. Multimedia
@@ -27,34 +26,29 @@ Wybierz rachunek
 12. Zobowiązania finansowe
 13. Inwestycje
 14. Transfer środków
-Wybierz kategorię
-2
+Wybierz kategorię: 2
 1. Żywność
 2. Stołówka/ posiłki poza domem
 3. Kosmetyki i Chemia
 4. Fryzjer/ kosmetyczka
 5. Alkohol
 6. Papierosy
-Wybierz podkategorię
-2
-Kwota
-15
-Tagi
-obiad, panorama
-Opis
-
-================
-Nazwa: Obiad w Panoramie
-Data: 2010-08-08
-Rachunek: Gotówka / -16 592,88 PLN
+Wybierz podkategorię: 2
 Kwota: 15
-Kategoria: Bieżące wydatki / Stołówka/ posiłki poza domem
-Tagi: obiad, panorama
+Tagi:
 Opis:
 ================
-Dane poprawne?
-y
+Nazwa: Obiad
+Data: 2010-08-08
+Rachunek: Gotówka / 100 PLN
+Kwota: 15
+Kategoria: Bieżące wydatki / Stołówka/ posiłki poza domem
+Tagi:
+Opis:
+================
+Dane poprawne? y
 Wysyłanie danych...
-a) dodaj
-b) koniec
-?  b
+a) Dodaj wydatek
+b) Lista transakcji
+c) Koniec
+?  c
