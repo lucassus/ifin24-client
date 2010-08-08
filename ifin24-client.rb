@@ -17,14 +17,15 @@ def get_entry(client)
   accounts = client.fetch_accounts
 
   entry = Entry.new
-  entry.title = ask('Nazwa')
+  entry.title = ask('Nazwa: ')
 
   curr_date = Date.today
-  entry.date = ask("Data (#{curr_date})")
-  entry.date = curr_date.to_s if entry.date.empty?
+  entry.date = ask('Data: ') do |q|
+    q.default = curr_date
+  end
 
   choose do |menu|
-    menu.prompt = 'Wybierz rachunek'
+    menu.prompt = 'Wybierz rachunek: '
 
     accounts.each do |name, id|
       menu.choice(name) do
@@ -36,7 +37,7 @@ def get_entry(client)
 
   sub_categories = {}
   choose do |menu|
-    menu.prompt = 'Wybierz kategorię'
+    menu.prompt = 'Wybierz kategorię: '
 
     categories.each do |name, sub|
       menu.choice(name) do
@@ -47,7 +48,7 @@ def get_entry(client)
   end
 
   choose do |menu|
-    menu.prompt = 'Wybierz podkategorię'
+    menu.prompt = 'Wybierz podkategorię: '
 
     sub_categories.each do |name, id|
       menu.choice(name) do
@@ -57,9 +58,9 @@ def get_entry(client)
     end
   end
 
-  entry.amount = eval ask('Kwota')
-  entry.tags = ask('Tagi')
-  entry.note = ask('Opis')
+  entry.amount = eval ask('Kwota: ')
+  entry.tags = ask('Tagi: ')
+  entry.note = ask('Opis: ')
 
   return entry
 end
@@ -78,7 +79,7 @@ def add_entry(client)
   entry = get_entry(client)
 
   puts entry.to_s
-  if agree("Dane poprawne?")
+  if agree("Dane poprawne? ")
     puts "Wysyłanie danych..."
     client.send_entry(entry)
   end
@@ -86,13 +87,13 @@ end
 
 def list(client)
   list = client.fetch_list
-  print_list(list, :date, :title, :subcategory_name, :amount)
+  print_list(list, :date, :title, :subcategory_name, :tags, :amount)
 end
 
 def print_list(items, *fields)
   # find max length for each field; start with the field names themselves
   fields = items.first.class.column_names unless fields.any?
-  max_len = Hash[*fields.map {|f| [f, f.to_s.length]}.flatten]
+  max_len = Hash[*fields.map { |f| [f, f.to_s.length] }.flatten]
   items.each do |item|
     fields.each do |field|
       len = item.send(field).to_s.length
@@ -100,15 +101,15 @@ def print_list(items, *fields)
     end
   end
 
-  border = '+-' + fields.map {|f| '-' * max_len[f] }.join('-+-') + '-+'
-  title_row = '| ' + fields.map {|f| sprintf("%-#{max_len[f]}s", f.to_s) }.join(' | ') + ' |'
+  border = '+-' + fields.map { |f| '-' * max_len[f] }.join('-+-') + '-+'
+  title_row = '| ' + fields.map { |f| sprintf("%-#{max_len[f]}s", f.to_s) }.join(' | ') + ' |'
 
   puts border
   puts title_row
   puts border
 
   items.each do |item|
-    row = '| ' + fields.map {|f| sprintf("%-#{max_len[f]}s", item.send(f)) }.join(' | ') + ' |'
+    row = '| ' + fields.map { |f| sprintf("%-#{max_len[f]}s", item.send(f)) }.join(' | ') + ' |'
     puts row
   end
 
