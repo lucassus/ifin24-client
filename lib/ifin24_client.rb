@@ -1,4 +1,8 @@
 class Ifin24Client
+
+  LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
+  ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
+
   def initialize(login, password)
     @login = login
     @password = password
@@ -9,7 +13,7 @@ class Ifin24Client
   end
 
   def fetch_categories
-    @agent.get('https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek')
+    @agent.get(ENTRY_FORM_URL)
     categories_element = @agent.page.search('ul.expenseCombo>li')
 
     categories = {}
@@ -35,7 +39,7 @@ class Ifin24Client
   end
 
   def fetch_accounts
-    @agent.get('https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek')
+    @agent.get(ENTRY_FORM_URL)
     accounts_element = @agent.page.search('ul#bankAccountCombo>li')
 
     accounts = {}
@@ -51,7 +55,7 @@ class Ifin24Client
   end
 
   def send_entry(entry)
-    @agent.get('https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek')
+    @agent.get(ENTRY_FORM_URL)
     form = @agent.page.forms.first
 
     form['entry.title'] = entry.title.to_s
@@ -68,12 +72,13 @@ class Ifin24Client
   private
 
   def login
-    @agent.get('https://www.ifin24.pl/logowanie')
-    login_form = @agent.page.forms.first
+    @agent.get(LOGIN_FORM_URL)
+    form = @agent.page.forms.first
 
-    login_form['login'] = @login
-    login_form['password'] = @password
+    form['login'] = @login
+    form['password'] = @password
 
-    login_form.submit
+    form.submit
   end
+
 end
