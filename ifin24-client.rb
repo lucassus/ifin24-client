@@ -9,9 +9,9 @@ require 'yaml'
 require 'mechanize'
 require 'highline/import'
 
-require 'lib/account'
-require 'lib/category'
-require 'lib/entry'
+require 'lib/models/account'
+require 'lib/models/category'
+require 'lib/models/entry'
 require 'lib/ifin24_client'
 
 def get_entry(client)
