@@ -5,9 +5,7 @@ class Ifin24Client
   LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'
 
   def initialize(login, password)
-    @login = login
-    @password = password
-    
+    @login, @password = login, password
     @agent = Mechanize.new
 
     login()
@@ -28,9 +26,9 @@ class Ifin24Client
       sub_categories = {}
       sub_categories_element.each do |sub_category_elem|
         sub_name = sub_category_elem.text.strip
-        id = sub_category_elem.attributes['rel'].value
+        sub_id = sub_category_elem.attributes['rel'].value
 
-        sub_categories[sub_name] = id
+        sub_categories[sub_name] = sub_id
       end
 
       categories[category_name] = sub_categories
@@ -43,13 +41,13 @@ class Ifin24Client
     @agent.get(ENTRY_FORM_URL)
     accounts_element = @agent.page.search('ul#bankAccountCombo>li')
 
-    accounts = {}
+    accounts = []
     accounts_element.each do |account_elem|
       id = account_elem.attributes['rel'].value
       next if id == '0' # skip the prompt
       name = account_elem.text.strip
 
-      accounts[name] = id
+      accounts << Account.new(id, name)
     end
 
     return accounts

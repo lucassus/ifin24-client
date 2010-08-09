@@ -9,13 +9,11 @@ require 'yaml'
 require 'mechanize'
 require 'highline/import'
 
+require 'lib/account'
 require 'lib/entry'
 require 'lib/ifin24_client'
 
 def get_entry(client)
-  categories = client.fetch_categories
-  accounts = client.fetch_accounts
-
   entry = Entry.new
   entry.title = ask('Nazwa: ')
 
@@ -24,17 +22,19 @@ def get_entry(client)
     q.default = curr_date
   end
 
+  accounts = client.fetch_accounts
   choose do |menu|
     menu.prompt = 'Wybierz rachunek: '
 
-    accounts.each do |name, id|
-      menu.choice(name) do
-        entry.account_name = name
-        entry.account_id = id
+    accounts.each do |account|
+      menu.choice(account.name) do
+        entry.account_name = account.name
+        entry.account_id = account.id
       end
     end
   end
 
+  categories = client.fetch_categories
   sub_categories = {}
   choose do |menu|
     menu.prompt = 'Wybierz kategorię: '
@@ -85,7 +85,12 @@ def add_entry(client)
   end
 end
 
-def list(client)
+def list_accounts(client)
+  accounts = client.fetch_accounts
+  print_list(accounts, :name)
+end
+
+def list_last_entries(client)
   list = client.fetch_list
   print_list(list, :date, :title, :subcategory_name, :tags, :amount)
 end
@@ -131,8 +136,12 @@ def main
         add_entry(client)
       end
 
-      menu.choice("Lista transakcji") do
-        list(client)
+      menu.choice("Lista kont") do
+        list_accounts(client)
+      end
+
+      menu.choice("Lista ostatnich transakcji") do
+        list_last_entries(client)
       end
 
       menu.choice("Koniec") do
