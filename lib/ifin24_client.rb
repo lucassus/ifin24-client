@@ -15,23 +15,24 @@ class Ifin24Client
     @agent.get(ENTRY_FORM_URL)
     categories_element = @agent.page.search('ul.expenseCombo>li')
 
-    categories = {}
+    categories = []
     categories_element[1..-1].each do |category_elem|
       category_without_children = category_elem.children[1].nil?
       next if category_without_children
 
       category_name = category_elem.children[0].text.strip
+      category = Category.new(nil, category_name)
       sub_categories_element = category_elem.children[1].children.search('li')
 
-      sub_categories = {}
       sub_categories_element.each do |sub_category_elem|
-        sub_name = sub_category_elem.text.strip
         sub_id = sub_category_elem.attributes['rel'].value
+        sub_name = sub_category_elem.text.strip
 
-        sub_categories[sub_name] = sub_id
+        sub_category = Category.new(sub_id, sub_name)
+        category.sub_categories << sub_category
       end
 
-      categories[category_name] = sub_categories
+      categories << category
     end
 
     return categories

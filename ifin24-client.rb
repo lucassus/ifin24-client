@@ -10,6 +10,7 @@ require 'mechanize'
 require 'highline/import'
 
 require 'lib/account'
+require 'lib/category'
 require 'lib/entry'
 require 'lib/ifin24_client'
 
@@ -39,10 +40,10 @@ def get_entry(client)
   choose do |menu|
     menu.prompt = 'Wybierz kategorię: '
 
-    categories.each do |name, sub|
-      menu.choice(name) do
-        entry.category_name = name
-        sub_categories = sub
+    categories.each do |category|
+      menu.choice(category.name) do
+        entry.category_name = category.name
+        sub_categories = category.sub_categories
       end
     end
   end
@@ -50,10 +51,10 @@ def get_entry(client)
   choose do |menu|
     menu.prompt = 'Wybierz podkategorię: '
 
-    sub_categories.each do |name, id|
-      menu.choice(name) do
-        entry.subcategory_name = name
-        entry.subcategory_id = id
+    sub_categories.each do |category|
+      menu.choice(category.name) do
+        entry.subcategory_name = category.name
+        entry.subcategory_id = category.id
       end
     end
   end
