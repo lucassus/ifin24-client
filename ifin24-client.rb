@@ -23,11 +23,10 @@ def get_entry(client)
     q.default = curr_date
   end
 
-  accounts = client.fetch_accounts
   choose do |menu|
     menu.prompt = 'Wybierz rachunek: '
 
-    accounts.each do |account|
+    client.accounts.each do |account|
       menu.choice(account.name) do
         entry.account_name = account.name
         entry.account_id = account.id
@@ -35,12 +34,11 @@ def get_entry(client)
     end
   end
 
-  categories = client.fetch_categories
   sub_categories = {}
   choose do |menu|
     menu.prompt = 'Wybierz kategorię: '
 
-    categories.each do |category|
+    client.categories.each do |category|
       menu.choice(category.name) do
         entry.category_name = category.name
         sub_categories = category.sub_categories
@@ -87,8 +85,7 @@ def add_entry(client)
 end
 
 def list_accounts(client)
-  accounts = client.fetch_accounts
-  print_list(accounts, :name)
+  print_list(client.accounts, :name)
 end
 
 def list_last_entries(client)

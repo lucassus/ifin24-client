@@ -11,47 +11,12 @@ class Ifin24Client
     login()
   end
 
-  def fetch_categories
-    @agent.get(ENTRY_FORM_URL)
-    categories_element = @agent.page.search('ul.expenseCombo>li')
-
-    categories = []
-    categories_element[1..-1].each do |category_elem|
-      category_without_children = category_elem.children[1].nil?
-      next if category_without_children
-
-      category_name = category_elem.children[0].text.strip
-      category = Category.new(nil, category_name)
-      sub_categories_element = category_elem.children[1].children.search('li')
-
-      sub_categories_element.each do |sub_category_elem|
-        sub_id = sub_category_elem.attributes['rel'].value
-        sub_name = sub_category_elem.text.strip
-
-        sub_category = Category.new(sub_id, sub_name)
-        category.sub_categories << sub_category
-      end
-
-      categories << category
-    end
-
-    return categories
+  def categories
+    @categories ||= fetch_categories
   end
 
-  def fetch_accounts
-    @agent.get(ENTRY_FORM_URL)
-    accounts_element = @agent.page.search('ul#bankAccountCombo>li')
-
-    accounts = []
-    accounts_element.each do |account_elem|
-      id = account_elem.attributes['rel'].value
-      next if id == '0' # skip the prompt
-      name = account_elem.text.strip
-
-      accounts << Account.new(id, name)
-    end
-
-    return accounts
+  def accounts
+    fetch_accounts
   end
 
   def send_entry(entry)
@@ -111,6 +76,49 @@ class Ifin24Client
     form['password'] = @password
 
     form.submit
+  end
+
+  def fetch_categories
+    @agent.get(ENTRY_FORM_URL)
+    categories_element = @agent.page.search('ul.expenseCombo>li')
+
+    categories = []
+    categories_element[1..-1].each do |category_elem|
+      category_without_children = category_elem.children[1].nil?
+      next if category_without_children
+
+      category_name = category_elem.children[0].text.strip
+      category = Category.new(nil, category_name)
+      sub_categories_element = category_elem.children[1].children.search('li')
+
+      sub_categories_element.each do |sub_category_elem|
+        sub_id = sub_category_elem.attributes['rel'].value
+        sub_name = sub_category_elem.text.strip
+
+        sub_category = Category.new(sub_id, sub_name)
+        category.sub_categories << sub_category
+      end
+
+      categories << category
+    end
+
+    return categories
+  end
+
+  def fetch_accounts
+    @agent.get(ENTRY_FORM_URL)
+    accounts_element = @agent.page.search('ul#bankAccountCombo>li')
+
+    accounts = []
+    accounts_element.each do |account_elem|
+      id = account_elem.attributes['rel'].value
+      next if id == '0' # skip the prompt
+      name = account_elem.text.strip
+
+      accounts << Account.new(id, name)
+    end
+
+    return accounts
   end
 
 end
