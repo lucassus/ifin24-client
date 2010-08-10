@@ -15,7 +15,7 @@ class Entry
     result <<  "Data: #{date}\n"
     result <<  "Rachunek: #{account_name}\n"
     result <<  "Kwota: #{amount}\n"
-    result <<  "Kategoria: #{category_name} / #{subcategory_name}\n"
+    result <<  "Kategoria: #{category_full_name}\n"
     result <<  "Tagi: #{tags}\n"
     result <<  "Opis: #{note}\n"
     result << delimiter
