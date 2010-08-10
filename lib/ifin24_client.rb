@@ -20,8 +20,8 @@ class Ifin24Client
   end
 
   def send_entry(entry)
-    @agent.get(ENTRY_FORM_URL)
-    form = @agent.page.forms.first
+    page = @agent.get(ENTRY_FORM_URL)
+    form = page.forms.first
 
     form['entry.title'] = entry.title.to_s
     form['entry.date'] = entry.date.to_s
@@ -35,8 +35,8 @@ class Ifin24Client
   end
 
   def fetch_list
-    @agent.get(LIST_URL)
-    entry_row_elements = @agent.page.search('table tbody tr')
+    page = @agent.get(LIST_URL)
+    entry_row_elements = page.search('table tbody tr')
 
     entries = []
 
@@ -69,8 +69,8 @@ class Ifin24Client
   private
 
   def login
-    @agent.get(LOGIN_FORM_URL)
-    form = @agent.page.forms.first
+    page = @agent.get(LOGIN_FORM_URL)
+    form = page.forms.first
 
     form['login'] = @login
     form['password'] = @password
@@ -79,8 +79,8 @@ class Ifin24Client
   end
 
   def fetch_categories
-    @agent.get(ENTRY_FORM_URL)
-    categories_element = @agent.page.search('ul.expenseCombo>li')
+    page = @agent.get(ENTRY_FORM_URL)
+    categories_element = page.search('ul.expenseCombo>li')
 
     categories = []
     categories_element[1..-1].each do |category_elem|
@@ -106,8 +106,8 @@ class Ifin24Client
   end
 
   def fetch_accounts
-    @agent.get(ENTRY_FORM_URL)
-    accounts_element = @agent.page.search('ul#bankAccountCombo>li')
+    page = @agent.get(ENTRY_FORM_URL)
+    accounts_element = page.search('ul#bankAccountCombo>li')
 
     accounts = []
     accounts_element.each do |account_elem|
