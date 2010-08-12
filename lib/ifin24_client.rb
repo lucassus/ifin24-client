@@ -35,7 +35,7 @@ class Ifin24Client
     form.submit
   end
 
-  def fetch_list(page = 1)
+  def fetch_entries(page = 1)
     page = @agent.get(LIST_URL + LIST_PAGE_PARAM + page.to_s)
     total_pages = extract_total_pages(page)
     entry_row_elements = page.search('table tbody tr')

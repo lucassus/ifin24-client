@@ -94,7 +94,7 @@ end
 
 def list_entries(client)
   current_page = 1
-  list, pages = client.fetch_list(current_page)
+  list, pages = client.fetch_entries(current_page)
   print_entries(list)
 
   catch :exit do
@@ -107,14 +107,14 @@ def list_entries(client)
         menu.choice("Poprzednia strona") do
           current_page -= 1
 
-          list, pages = client.fetch_list(current_page)
+          list, pages = client.fetch_entries(current_page)
           print_entries(list)
         end if current_page > 1
 
         menu.choice("Następna strona") do
           current_page += 1
 
-          list, pages = client.fetch_list(current_page)
+          list, pages = client.fetch_entries(current_page)
           print_entries(list)
         end if current_page < pages
 
