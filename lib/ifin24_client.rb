@@ -37,6 +37,7 @@ class Ifin24Client
 
   def fetch_list(page = 1)
     page = @agent.get(LIST_URL + LIST_PAGE_PARAM + page.to_s)
+    total_pages = extract_total_pages(page)
     entry_row_elements = page.search('table tbody tr')
 
     entries = []
@@ -64,7 +65,7 @@ class Ifin24Client
       entries << entry
     end
 
-    return entries
+    return entries, total_pages
   end
 
   private
@@ -120,6 +121,11 @@ class Ifin24Client
     end
 
     return accounts
+  end
+
+  def extract_total_pages(page)
+    #TODO implement
+    3
   end
 
 end

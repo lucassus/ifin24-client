@@ -88,9 +88,42 @@ def list_accounts(client)
   print_list(client.accounts, :name)
 end
 
-def list_last_entries(client)
-  list = client.fetch_list
+def print_entries(list)
   print_list(list, :date, :title, :subcategory_name, :tags, :amount)
+end
+
+def list_entries(client)
+  current_page = 1
+  list, pages = client.fetch_list(current_page)
+  print_entries(list)
+
+  catch :exit do
+    loop do
+      choose do |menu|
+        menu.index = :letter
+        menu.index_suffix = ") "
+        menu.shell = true
+
+        menu.choice("Poprzednia strona") do
+          current_page -= 1
+
+          list, pages = client.fetch_list(current_page)
+          print_entries(list)
+        end if current_page > 1
+
+        menu.choice("Następna strona") do
+          current_page += 1
+
+          list, pages = client.fetch_list(current_page)
+          print_entries(list)
+        end if current_page < pages
+
+        menu.choice("Powrót do głównego menu") do
+          throw :exit
+        end
+      end
+    end
+  end
 end
 
 def print_list(items, *fields)
@@ -124,26 +157,28 @@ def main
   config = load_config
   client = Ifin24Client.new(config[:login], config[:password])
 
-  loop do
-    choose do |menu|
-      menu.index = :letter
-      menu.index_suffix = ") "
-      menu.shell = true
+  catch :exit do
+    loop do
+      choose do |menu|
+        menu.index = :letter
+        menu.index_suffix = ") "
+        menu.shell = true
 
-      menu.choice("Dodaj wydatek") do
-        add_entry(client)
-      end
+        menu.choice("Dodaj wydatek") do
+          add_entry(client)
+        end
 
-      menu.choice("Lista kont") do
-        list_accounts(client)
-      end
+        menu.choice("Lista kont") do
+          list_accounts(client)
+        end
 
-      menu.choice("Lista ostatnich transakcji") do
-        list_last_entries(client)
-      end
+        menu.choice("Lista ostatnich transakcji") do
+          list_entries(client)
+        end
 
-      menu.choice("Koniec") do
-        exit
+        menu.choice("Koniec") do
+          throw :exit
+        end
       end
     end
   end
