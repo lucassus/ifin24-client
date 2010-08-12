@@ -3,6 +3,7 @@ class Ifin24Client
   LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
   ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
   LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'
+  LIST_PAGE_PARAM = '?pageNumber='
 
   def initialize(login, password)
     @login, @password = login, password
@@ -34,8 +35,8 @@ class Ifin24Client
     form.submit
   end
 
-  def fetch_list
-    page = @agent.get(LIST_URL)
+  def fetch_list(page = 1)
+    page = @agent.get(LIST_URL + LIST_PAGE_PARAM + page.to_s)
     entry_row_elements = page.search('table tbody tr')
 
     entries = []
