@@ -47,7 +47,7 @@ module Ifin24
         entry_elements = entry_row_element.search('td')
         next if entry_elements.size != 5
 
-        entry = Entry.new
+        entry = Models::Entry.new
 
         title_column = entry_elements[2]
         entry.title = title_column.children[0].text.strip
@@ -91,14 +91,14 @@ module Ifin24
         next if category_without_children
 
         category_name = category_elem.children[0].text.strip
-        category = Category.new(nil, category_name)
+        category = Models::Category.new(nil, category_name)
         sub_categories_element = category_elem.children[1].children.search('li')
 
         sub_categories_element.each do |sub_category_elem|
           sub_id = sub_category_elem.attributes['rel'].value
           sub_name = sub_category_elem.text.strip
 
-          sub_category = Category.new(sub_id, sub_name)
+          sub_category = Models::Category.new(sub_id, sub_name)
           category.sub_categories << sub_category
         end
 
@@ -118,7 +118,7 @@ module Ifin24
         next if id == '0' # skip the prompt
         name = account_elem.text.strip
 
-        accounts << Account.new(id, name)
+        accounts << Models::Account.new(id, name)
       end
 
       return accounts
