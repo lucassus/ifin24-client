@@ -2,11 +2,15 @@ module Ifin24::Models
   class Category
 
     attr_accessor :id, :name
-    attr_accessor :sub_categories
+    attr_accessor :children
 
-    def initialize(id, name, sub_categories = [])
+    def initialize(id, name, children = [])
       @id, @name = id, name
-      @sub_categories = sub_categories
+      @children = children
+    end
+
+    def to_s
+      @name
     end
 
   end

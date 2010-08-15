@@ -27,8 +27,8 @@ module Ifin24
 
       form['entry.title'] = entry.title.to_s
       form['entry.date'] = entry.date.to_s
-      form['selectedBankAccount'] = entry.account_id.to_s
-      form['entry.entryCategory.id'] = entry.subcategory_id.to_s
+      form['selectedBankAccount'] = entry.account.id.to_s
+      form['entry.entryCategory.id'] = entry.sub_category.id.to_s
       form['entry.amount'] = entry.amount.to_s
       form['value'] = entry.tags.to_s
       form['entry.note'] = entry.note.to_s
@@ -57,9 +57,10 @@ module Ifin24
         entry.date = date_column.text.strip
 
         category_column = entry_elements[3]
-        entry.subcategory_name = category_column.children[0].text.strip
+        category = Models::Category.new(nil, category_column.children[0].text.strip)
+        entry.sub_category = category
+        
         entry.tags = category_column.search('span').text.strip
-
         amount_column = entry_elements[4]
         entry.amount = amount_column.text.strip
 
@@ -92,14 +93,14 @@ module Ifin24
 
         category_name = category_elem.children[0].text.strip
         category = Models::Category.new(nil, category_name)
-        sub_categories_element = category_elem.children[1].children.search('li')
+        children_element = category_elem.children[1].children.search('li')
 
-        sub_categories_element.each do |sub_category_elem|
-          sub_id = sub_category_elem.attributes['rel'].value
-          sub_name = sub_category_elem.text.strip
+        children_element.each do |child_elem|
+          child_id = child_elem.attributes['rel'].value
+          child_name = child_elem.text.strip
 
-          sub_category = Models::Category.new(sub_id, sub_name)
-          category.sub_categories << sub_category
+          child = Models::Category.new(child_id, child_name)
+          category.children << child
         end
 
         categories << category

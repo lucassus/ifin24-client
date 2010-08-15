@@ -44,7 +44,7 @@ module Ifin24
       get_category(entry)
       get_amount(entry)
       get_tags(entry)
-      get_notes(entry)
+      get_note(entry)
 
       return entry
     end
@@ -52,10 +52,52 @@ module Ifin24
     def add_entry
       entry = get_entry
 
-      puts entry.to_s
-      if agree("Dane poprawne? ")
-        puts "Wysyłanie danych..."
-        @client.send_entry(entry)
+      catch :all_ok do
+        loop do
+          choose do |menu|
+            menu.index = :letter
+            menu.index_suffix = ") "
+            menu.shell = true
+
+            menu.choice("Nazwa: #{entry.title}") do
+              get_title(entry)
+            end
+
+            menu.choice("Data: #{entry.date}") do
+              get_date(entry)
+            end
+
+            menu.choice("Konto: #{entry.account.name}") do
+              get_account(entry)
+            end
+
+            menu.choice("Kategoria: #{entry.category_full_name}") do
+              get_category(entry)
+            end
+
+            menu.choice("Kwota: #{entry.amount}") do
+              get_amount(entry)
+            end
+
+            menu.choice("Tagi: #{entry.tags}") do
+              get_tags(entry)
+            end
+
+            menu.choice("Opis: #{entry.note}") do
+              get_note(entry)
+            end
+
+            menu.choice("Powrót do głównego menu") do
+              throw :all_ok
+            end
+
+            menu.choice("Wyślij") do
+              puts "Wysyłanie danych..."
+              @client.send_entry(entry)
+              throw :all_ok
+            end
+          end
+        end
       end
     end
 
@@ -64,7 +106,7 @@ module Ifin24
     end
 
     def print_entries(list)
-      print_list(list, :date, :title, :subcategory_name, :tags, :amount)
+      print_list(list, :date, :title, :sub_category, :tags, :amount)
     end
 
     def list_entries
@@ -147,22 +189,19 @@ module Ifin24
 
         @client.accounts.each do |account|
           menu.choice(account.name) do
-            entry.account_name = account.name
-            entry.account_id = account.id
+            entry.account = account
           end
         end
       end
     end
 
     def get_category(entry)
-      sub_categories = {}
       choose do |menu|
         menu.prompt = 'Wybierz kategorię: '
 
         @client.categories.each do |category|
           menu.choice(category.name) do
-            entry.category_name = category.name
-            sub_categories = category.sub_categories
+            entry.category = category
           end
         end
       end
@@ -170,10 +209,9 @@ module Ifin24
       choose do |menu|
         menu.prompt = 'Wybierz podkategorię: '
 
-        sub_categories.each do |category|
-          menu.choice(category.name) do
-            entry.subcategory_name = category.name
-            entry.subcategory_id = category.id
+        entry.category.children.each do |child|
+          menu.choice(child.name) do
+            entry.sub_category = child
           end
         end
       end
