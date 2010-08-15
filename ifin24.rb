@@ -9,10 +9,10 @@ require 'yaml'
 require 'mechanize'
 require 'highline/import'
 
+require 'lib/ifin24/client'
 require 'lib/models/account'
 require 'lib/models/category'
 require 'lib/models/entry'
-require 'lib/ifin24_client'
 
 def get_entry(client)
   entry = Entry.new
@@ -105,18 +105,18 @@ def list_entries(client)
         menu.shell = true
 
         menu.choice("Poprzednia strona") do
-          current_page -= 1
+          current_page -= 1 if current_page > 1
 
           list, pages = client.fetch_entries(current_page)
           print_entries(list)
-        end if current_page > 1
+        end
 
         menu.choice("Następna strona") do
-          current_page += 1
+          current_page += 1 if current_page < pages
 
           list, pages = client.fetch_entries(current_page)
           print_entries(list)
-        end if current_page < pages
+        end 
 
         menu.choice("Powrót do głównego menu") do
           throw :exit
@@ -155,7 +155,7 @@ end
 
 def main
   config = load_config
-  client = Ifin24Client.new(config[:login], config[:password])
+  client = Ifin24::Client.new(config[:login], config[:password])
 
   catch :exit do
     loop do
