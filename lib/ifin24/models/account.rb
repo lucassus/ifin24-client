@@ -1,12 +1,6 @@
-module Ifin24::Models
-  class Account
+class Ifin24::Models::Account < Ifin24::Models::Base
 
-    attr_accessor :id
-    attr_accessor :name
+  attr_accessor :id
+  attr_accessor :name
 
-    def initialize(id, name)
-      @id, @name = id, name
-    end
-
-  end
 end

@@ -1,17 +1,10 @@
-module Ifin24::Models
-  class Category
+class Ifin24::Models::Category < Ifin24::Models::Base
 
-    attr_accessor :id, :name
-    attr_accessor :children
+  attr_accessor :id, :name
+  attr_accessor :children
 
-    def initialize(id, name, children = [])
-      @id, @name = id, name
-      @children = children
-    end
-
-    def to_s
-      @name
-    end
-
+  def to_s
+    @name
   end
+
 end
