@@ -25,7 +25,7 @@ class Ifin24::Console
   end
 
   def get_entry
-    entry = Models::Entry.new
+    entry = Ifin24::Models::Entry.new
 
     get_title(entry)
     get_date(entry)
