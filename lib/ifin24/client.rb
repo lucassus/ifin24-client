@@ -6,10 +6,8 @@ class Ifin24::Client
   LIST_PAGE_PARAM = '?pageNumber='
 
   def initialize(login, password)
-    @login, @password = login, password
     @agent = Mechanize.new
-
-    login()
+    login(login, password)
   end
 
   def categories
@@ -35,9 +33,9 @@ class Ifin24::Client
     form.submit
   end
 
-  def fetch_entries(page = 1)
-    page = @agent.get(LIST_URL + LIST_PAGE_PARAM + page.to_s)
-    total_pages = extract_total_pages(page)
+  def fetch_entries(curr_page = 1)
+    page = @agent.get(LIST_URL + LIST_PAGE_PARAM + curr_page.to_s)
+    total_pages = extract_entries_total_pages(page)
     entry_row_elements = page.search('table tbody tr')
 
     entries = []
@@ -71,12 +69,12 @@ class Ifin24::Client
 
   private
 
-  def login
+  def login(login, password)
     page = @agent.get(LOGIN_FORM_URL)
     form = page.forms.first
 
-    form['login'] = @login
-    form['password'] = @password
+    form['login'] = login
+    form['password'] = password
 
     form.submit
   end
@@ -125,7 +123,7 @@ class Ifin24::Client
   end
 
   # TODO implement
-  def extract_total_pages(page)
+  def extract_entries_total_pages(page)
     3
   end
 
