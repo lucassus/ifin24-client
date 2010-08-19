@@ -4,6 +4,7 @@ module Ifin24
   VERSION = "0.0.1"
 
   autoload :Client, 'lib/ifin24/client'
+  autoload :Commands, 'lib/ifin24/commands'
   autoload :Console, 'lib/ifin24/console'
   autoload :Helpers, 'lib/ifin24/helpers'
   autoload :Models, 'lib/ifin24/models'
