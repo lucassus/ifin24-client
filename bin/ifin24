@@ -11,18 +11,8 @@ require 'highline/import'
 
 require 'lib/ifin24'
 
-def load_config
-  file_name = File.join(ENV['HOME'], '.ifin24-client', 'config.yml')
-  if File.exist?(file_name)
-    YAML.load_file(file_name) rescue {}
-  else
-    puts "Nie odnaleziono pliku konfiguracyjnego: #{file_name}"
-    exit
-  end
-end
-
 def main
-  config = load_config
+  config = Ifin24::Configuration.instance
   client = Ifin24::Client.new(config[:login], config[:password])
   console = Ifin24::Console.new(client)
   console.main_menu
