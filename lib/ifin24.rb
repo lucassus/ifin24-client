@@ -3,10 +3,10 @@ module Ifin24
   # Do not change the value by hand; it will be updated automatically by the gem release script.
   VERSION = "0.0.1"
 
-  autoload :Client, 'lib/ifin24/client'
-  autoload :Commands, 'lib/ifin24/commands'
-  autoload :Configuration, 'lib/ifin24/configuration'
-  autoload :Console, 'lib/ifin24/console'
-  autoload :Helpers, 'lib/ifin24/helpers'
-  autoload :Models, 'lib/ifin24/models'
+  autoload :Client, 'ifin24/client'
+  autoload :Commands, 'ifin24/commands'
+  autoload :Configuration, 'ifin24/configuration'
+  autoload :Console, 'ifin24/console'
+  autoload :Helpers, 'ifin24/helpers'
+  autoload :Models, 'ifin24/models'
 end

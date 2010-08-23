@@ -1,8 +1,8 @@
 module Ifin24::Commands
 
-  autoload :Base, 'lib/ifin24/commands/base'
-  autoload :AddExpense, 'lib/ifin24/commands/add_expense'
-  autoload :ListAccounts, 'lib/ifin24/commands/list_accounts'
-  autoload :ListEntries, 'lib/ifin24/commands/list_entries'
+  autoload :Base, 'ifin24/commands/base'
+  autoload :AddExpense, 'ifin24/commands/add_expense'
+  autoload :ListAccounts, 'ifin24/commands/list_accounts'
+  autoload :ListEntries, 'ifin24/commands/list_entries'
 
 end

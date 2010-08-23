@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
 require 'rubygems'
 require 'bundler'
 Bundler.setup
@@ -9,7 +11,7 @@ require 'yaml'
 require 'mechanize'
 require 'highline/import'
 
-require 'lib/ifin24'
+require 'ifin24'
 
 def main
   config = Ifin24::Configuration.instance
