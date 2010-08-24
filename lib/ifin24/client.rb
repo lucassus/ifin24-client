@@ -124,6 +124,7 @@ class Ifin24::Client
 
   # TODO implement
   def extract_entries_total_pages(page)
+#    page.search('div.pager a')
     3
   end
 
