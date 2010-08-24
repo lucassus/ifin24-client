@@ -8,4 +8,3 @@ module Ifin24
   autoload :Models, 'ifin24/models'
 
 end
-

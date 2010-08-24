@@ -1,4 +1,5 @@
 require 'singleton'
+require 'yaml'
 
 class Ifin24::Configuration
   include Singleton

@@ -1,21 +1,46 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rubygems'
-
-require 'yaml'
 require 'mechanize'
 require 'highline/import'
+require 'optparse'
 
 require 'ifin24'
 
-def main
-  config = Ifin24::Configuration.instance
-  client = Ifin24::Client.new(config[:login], config[:password])
-  console = Ifin24::Console.new(client)
-  console.main_menu
+options = {}
+ARGV.options do |opts|
+  script_name = File.basename($0)
+
+  opts.set_summary_indent('  ')
+  opts.banner = "Usage: #{script_name} [OPTIONS]"
+  opts.define_head "Abstract description of script"
+
+  opts.separator ""
+  opts.separator "Mandatory arguments to long options are mandatory for short options too."
+  opts.separator ""
+
+  opts.on("-l", "--login", "User login") do |login|
+    options[:login] = login
+  end
+
+  opts.on("-p", "--password", "User password") do |password|
+    options[:password] = password
+  end
+
+  opts.on_tail("-h", "--help", "Show this help message.") do
+    puts opts
+    exit
+  end
+
+  opts.parse!
 end
 
-main
+config = Ifin24::Configuration.instance
+login = options[:login] || config[:login]
+password = options[:password] || config[:password]
+client = Ifin24::Client.new(login, password)
+
+console = Ifin24::Console.new(client)
+console.main_menu
