@@ -42,5 +42,9 @@ login = options[:login] || config[:login]
 password = options[:password] || config[:password]
 client = Ifin24::Client.new(login, password)
 
-console = Ifin24::Console.new(client)
-console.main_menu
+if client.logged?
+  console = Ifin24::Console.new(client)
+  console.main_menu
+else
+  puts "Bad login or password."
+end

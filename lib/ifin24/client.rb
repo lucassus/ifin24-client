@@ -67,6 +67,10 @@ class Ifin24::Client
     return entries, total_pages
   end
 
+  def logged?
+    @logged
+  end
+
   private
 
   def login(login, password)
@@ -76,7 +80,8 @@ class Ifin24::Client
     form['login'] = login
     form['password'] = password
 
-    form.submit
+    page = form.submit
+    @logged = page.forms.first.nil?
   end
 
   def fetch_categories
