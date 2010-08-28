@@ -5,46 +5,71 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rubygems'
 require 'mechanize'
 require 'highline/import'
+
 require 'optparse'
+require 'ostruct'
 
 require 'ifin24'
 
-options = {}
-ARGV.options do |opts|
-  script_name = File.basename($0)
+class App
 
-  opts.set_summary_indent('  ')
-  opts.banner = "Usage: #{script_name} [OPTIONS]"
-  opts.define_head "Abstract description of script"
+  def initialize(arguments)
+    @arguments = arguments
 
-  opts.separator ""
-  opts.separator "Mandatory arguments to long options are mandatory for short options too."
-  opts.separator ""
-
-  opts.on("-l", "--login", "User login") do |login|
-    options[:login] = login
+    # Set defaults
+    @options = OpenStruct.new
+    @options.verbose = false
+    @options.quiet = false
   end
 
-  opts.on("-p", "--password", "User password") do |password|
-    options[:password] = password
+  def run
+    parse_options
+
+    config = Ifin24::Configuration.instance
+    login = @options.login || config[:login]
+    password = @options.password || config[:password]
+    client = Ifin24::Client.new(login, password)
+
+    if client.logged?
+      console = Ifin24::Console.new(client)
+      console.main_menu
+    else
+      puts "Bad login or password."
+    end
   end
 
-  opts.on_tail("-h", "--help", "Show this help message.") do
-    puts opts
-    exit
+  protected
+
+  def parse_options
+    # Specify options
+    opts = OptionParser.new
+    opts.set_summary_indent('  ')
+    script_name = File.basename($0)
+    opts.banner = "Usage: #{script_name} [OPTIONS]"
+    opts.define_head "Abstract description of script"
+
+    opts.separator ""
+    opts.separator "Mandatory arguments to long options are mandatory for short options too."
+    opts.separator ""
+
+    opts.on("-l", "--login", "User login") do |login|
+      @options.login = login
+    end
+
+    opts.on("-p", "--password", "User password") do |password|
+      @options.password = password
+    end
+
+    opts.on_tail("-h", "--help", "Show this help message.") do
+      puts opts
+      exit
+    end
+
+    opts.parse!(@arguments) rescue return false
   end
 
-  opts.parse!
 end
 
-config = Ifin24::Configuration.instance
-login = options[:login] || config[:login]
-password = options[:password] || config[:password]
-client = Ifin24::Client.new(login, password)
-
-if client.logged?
-  console = Ifin24::Console.new(client)
-  console.main_menu
-else
-  puts "Bad login or password."
-end
+# Create and run the application
+app = App.new(ARGV)
+app.run
