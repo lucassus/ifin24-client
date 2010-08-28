@@ -11,13 +11,13 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
           menu.index = :letter
           menu.index_suffix = ") "
 
-          menu.choice("Nazwa: #{entry.title}") { get_title(entry) }
-          menu.choice("Data: #{entry.date}") { get_date(entry) }
-          menu.choice("Konto: #{entry.account.name}") { get_account(entry) }
-          menu.choice("Kategoria: #{entry.category_full_name}") { get_category(entry) }
-          menu.choice("Kwota: #{entry.amount}") { get_amount(entry) }
-          menu.choice("Tagi: #{entry.tags}") { get_tags(entry) }
-          menu.choice("Opis: #{entry.note}") { get_note(entry) }
+          menu.choice("Nazwa: #{entry.title}") { get_title_for(entry) }
+          menu.choice("Data: #{entry.date}") { get_date_for(entry) }
+          menu.choice("Konto: #{entry.account.name}") { get_account_for(entry) }
+          menu.choice("Kategoria: #{entry.category_full_name}") { get_category_for(entry) }
+          menu.choice("Kwota: #{entry.amount}") { get_amount_for(entry) }
+          menu.choice("Tagi: #{entry.tags}") { get_tags_for(entry) }
+          menu.choice("Opis: #{entry.note}") { get_note_for(entry) }
 
           menu.choice("Powrót do głównego menu") do
             throw :all_ok
@@ -38,29 +38,29 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
   def get_entry
     entry = Ifin24::Models::Entry.new
 
-    get_title(entry)
-    get_date(entry)
-    get_account(entry)
-    get_category(entry)
-    get_amount(entry)
-    get_tags(entry)
-    get_note(entry)
+    get_title_for(entry)
+    get_date_for(entry)
+    get_account_for(entry)
+    get_category_for(entry)
+    get_amount_for(entry)
+    get_tags_for(entry)
+    get_note_for(entry)
 
     return entry
   end
 
-  def get_title(entry)
+  def get_title_for(entry)
     entry.title = ask('Nazwa: ')
   end
 
-  def get_date(entry)
+  def get_date_for(entry)
     curr_date = Date.today
     entry.date = ask('Data: ') do |q|
       q.default = curr_date
     end
   end
 
-  def get_account(entry)
+  def get_account_for(entry)
     choose do |menu|
       menu.prompt = 'Wybierz rachunek: '
 
@@ -72,7 +72,7 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
     end
   end
 
-  def get_category(entry)
+  def get_category_for(entry)
     choose do |menu|
       menu.prompt = 'Wybierz kategorię: '
 
@@ -94,15 +94,15 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
     end
   end
 
-  def get_amount(entry)
+  def get_amount_for(entry)
     entry.amount = eval ask('Kwota: ')
   end
 
-  def get_tags(entry)
+  def get_tags_for(entry)
     entry.tags = ask('Tagi: ')
   end
 
-  def get_note(entry)
+  def get_note_for(entry)
     entry.note = ask('Opis: ')
   end
 

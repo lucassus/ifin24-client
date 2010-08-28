@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
-  BAR_SIZE = 50
+  LIMIT_BAR_SIZE = 50
 
   def execute
     limits = @client.fetch_limits
@@ -19,14 +19,14 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
 
   def make_limit_bar(amount, max)
     amount = [amount, max].min
-    taken = ((amount / max) * BAR_SIZE).to_i
+    taken = ((amount / max) * LIMIT_BAR_SIZE).to_i
 
     bar = "["
     taken.times do
       bar << "#"
     end
 
-    (BAR_SIZE - taken).times do
+    (LIMIT_BAR_SIZE - taken).times do
       bar << "."
     end
     bar << "]"
