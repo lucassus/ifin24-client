@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>iFIN24 - Zarządzanie finansami osobistymi</title>
+
+    <style type="text/css" media="all">@import "/c/s.css?200912211724";</style>
+    <style type="text/css" media="all">@import "/c/jquery.datepick.css?200912211724";</style>
+
+    <script type="text/javascript" src="/js/jquery-1.3.2.min.js?200912211724"></script>
+	<script type="text/javascript" src="/js/jquery.form.js?200912211724"></script>
+	<script type="text/javascript" src="/js/jqModal.js?200912211724"></script>
+
+    <script type="text/javascript" src="/js/jquery.datepick.pack.js?200912211724"></script>
+    <script type="text/javascript" src="/js/jquery.datepick-pl.js?200912211724"></script>
+	<script type="text/javascript" src="/js/ifin.common.js?200912211724"></script>
+	<script type="text/javascript" src="/js/ifin.modal.js?200912211724"></script>
+	<script type="text/javascript" src="/js/ifin.combo.js?200912211724"></script>
+	<script type="text/javascript" src="/js/ifin.entlist.js?200912211724"></script>
+
+	<script type="text/javascript" src="/js/swfobject.js?200912211724"></script>
+
+	<meta name="description" content="iFIN24 - wygodny i bezpieczny serwis do zarządzania finansami osobistymi. Kontroluj wydatki, oszczędzaj i inwestuj!" />
+	<meta name="keywords" content="budżet domowy, domowe finanse, jak inwestować, finanse osobiste, oszczędzanie, jak oszczędzać, kontrola wydatków, planowanie wydatków, porady finansowe" />
+    <meta name="language" content="pl" />
+	<meta name="robots" content="all" />
+	<meta name="siteinfo" content="/c/robots.txt" />
+	<meta name="page-topic" content="budżet domowy, domowe finanse, jak inwestować, finanse osobiste" />
+	<meta name="author" content="iFIN24 S.A." />
+	<meta name="publisher" content="iFIN24 S.A." />
+	<meta name="reply-to" content="helpdesk@ifin24.pl" />
+	<meta name="copyright" content="Copyright (c) iFIN24 S.A. - www.ifin24.pl" />
+	<meta name="revisit-after" content="5 days" />
+	<meta name="audience" content="all" />
+	<meta name="rating" content="general" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<meta http-equiv="pragma" content="private" />
+	<meta http-equiv="imagetoolbar" content="no" />
+
+
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, max-age=0, must-revalidate" />
+
+	<meta name="MSSmartTagsPreventParsing" content="true" />
+	<meta name='DC.title' content="iFIN24 S.A." />
+
+	<link rel="Shortcut Icon" href="/c/favicon.ico" type="image/x-icon" />
+    <!--[if IE 7]>
+        <style type="text/css">
+            select {margin-top:2px}
+			.ddcb, .datepick-trigger, .c form.filter button {margin-top:1px}
+        </style>
+    <![endif]-->
+</head>
+
+
+<body>
+<div id="w">	<div id="mh">
+		<h1><a id="h-logo" href="/" title="Strona główna">iFIN24</a></h1>
+        <div id="h-spacer"></div>
+		<ul id="h-options">			<li><a href="/wyloguj" title="Wyloguj" class="logout">Wyloguj: lucassus</a></li>
+
+			<li><a href="/zarzadzanie-finansami/ustawienia/profil-uzytkownika" title="Przejdź do ustawień iFIN24" class="settings">Ustawienia</a></li>
+            <li><a href="/faq" title="Pomoc użytkownika" class="help">FAQ</a></li>
+            <li><a href="/zarzadzanie-finansami/zglos-problem" title="Pomoc użytkownika" class="report showModal">Zgłoś problem</a></li>
+		</ul>
+		<ul id="h-navigation">
+			<li id="hn-finance"><a href="/" title="Zarządzanie finansami osobistymi" class="active">Zarządzanie Finasami</a></li>
+			<li id="hn-guides"><a href="http://porady.ifin24.pl" title="Porady finansowe">Porady</a></li>
+            <li id="hn-blogs"><a href="http://blogi.ifin24.pl" title="Blogi iFIN24">Blogi</a></li>
+
+		</ul>
+	</div>	<div id="mn" class="finance">
+		<a href="/zarzadzanie-finansami" title="Przejdź do strony głównej" class="icon main-page">Strona główna</a>
+        <a href="/zarzadzanie-finansami/rachunki/gotowka/lista" title="Rachunki" class="icon accounts">Rachunki</a>
+        <a href="/zarzadzanie-finansami/kontrola-wydatkow" title="Kontrola wydatków" class="icon expense-tracking">Kontrola wydatków</a>
+        <a href="/zarzadzanie-finansami/transakcje/import/wczytaj-plik" title="Importuj transakcje" class="icon import-entries">Importuj transakcje</a>
+        <a href="/zarzadzanie-finansami/transakcje/dodaj-przychod" title="Dodaj przychód" class="icon add-income showModal">Dodaj przychód</a>
+
+        <a href="/zarzadzanie-finansami/transakcje/dodaj-wydatek" title="Dodaj wydatek" class="icon add-expense showModal">Dodaj wydatek</a>
+        <a href="/zarzadzanie-finansami/transakcje/lista" title="Lista transakcji" class="icon transactions">Lista transakcji</a>
+        <a href="/zarzadzanie-finansami/planer/zaplanuj-przychod" title="Zaplanuj przychód" class="icon plan-income showModal">Zaplanuj przychód</a>
+        <a href="/zarzadzanie-finansami/planer/zaplanuj-wydatek" title="Zaplanuj wydatek" class="icon plan-expense showModal">Zaplanuj wydatek</a>
+        <a href="/zarzadzanie-finansami/planer/lista-planow" title="Lista planów" class="icon plan-list">Lista planów</a>
+        <a href="/zarzadzanie-finansami/raporty/struktura-wydatkow-wykres" title="Pokaż raporty" class="icon reports">Raporty</a>
+
+	</div>
+
+<div id="mc" class="c expenses-tracking">
+    <h1>Kontrola wydatków</h1>
+    <div id="mcm">
+        <div class="date-scroll"><a class="left" title="Poprzedni miesiąc" href="/zarzadzanie-finansami/kontrola-wydatkow?data=2010-07">
+        </a><span>sierpień 2010</span>
+        <a class="right" title="Następny miesiąc" href="/zarzadzanie-finansami/kontrola-wydatkow?data=2010-09"></a></div>
+        <ul>
+
+            <li>
+                	<h2>W tym miesiącu możesz zaoszczędzić: <em class="red">-2 545,12 PLN</em></h2><br />
+                <div id="ch-expenses-tracking-summary"></div>
+                <div class="summary-label">
+                    <p>przychód:<br />
+                        <span class="amount green">236,27 <em>PLN</em></span>
+
+                    </p>
+                </div>
+                <ul>
+                    	<li>
+                        	<div class="accomplished"></div>
+                        	<span>Wydatki zrealizowane</span>
+                        	<span class="amount float-right red">2 316,39 <em>PLN</em></span>
+
+                    	</li>
+                    	<li>
+                        	<div class="planned"></div>
+                        	<span>Wydatki zaplanowane niezrealizowane</span>
+                        	<span class="amount float-right red">465,00 <em>PLN</em></span>
+                    	</li>
+                </ul>
+
+            </li>
+            <br />
+            <li>
+                <h2 style="border-bottom:0">Limity na twoich wydatkach</h2>
+                <table id="expenses-tracking-limits">
+                    <colgroup>
+                        <col class="name" />
+                        <col class="chart" />
+
+                        <col class="amount" />
+                        <col class="action" />
+                        <col class="action" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>Kursy i szkolenia</td>
+                            <td><div id="ch-expenses-tracking-limits0"></div></td>
+
+                            <td class="amount">0,00 <em>PLN</em> z 200,00 <em>PLN</em></td>
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3009">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3009">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+
+                            <td>Zajęcia sportowe</td>
+                            <td><div id="ch-expenses-tracking-limits1"></div></td>
+                            <td class="amount">0,00 <em>PLN</em> z 100,00 <em>PLN</em></td>
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3120">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3120">Usuń</a></div></td>
+
+                        </tr>
+                        <tr>
+                            <td>Wynajem</td>
+                            <td><div id="ch-expenses-tracking-limits2"></div></td>
+                            <td class="amount">670,00 <em>PLN</em> z 800,00 <em>PLN</em></td>
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3294">Edytuj</a></div></td>
+
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3294">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+                            <td>Spłata kredytu</td>
+                            <td><div id="ch-expenses-tracking-limits3"></div></td>
+                            <td class="amount">342,27 <em>PLN</em> z 700,00 <em>PLN</em></td>
+
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3020">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3020">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+                            <td>Wyjście do klubu/Impreza</td>
+                            <td><div id="ch-expenses-tracking-limits4"></div></td>
+                            <td class="amount"><span class="red">291,00 <em>PLN</em></span> z 200,00 <em>PLN</em></td>
+
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3047">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3047">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+                            <td>Stołówka/ posiłki poza domem</td>
+                            <td><div id="ch-expenses-tracking-limits5"></div></td>
+                            <td class="amount"><span class="red">278,49 <em>PLN</em></span> z 200,00 <em>PLN</em></td>
+
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=2959">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="2959">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+                            <td>Żywność</td>
+                            <td><div id="ch-expenses-tracking-limits6"></div></td>
+                            <td class="amount">166,15 <em>PLN</em> z 500,00 <em>PLN</em></td>
+
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3107">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3107">Usuń</a></div></td>
+                        </tr>
+                        <tr>
+                            <td>Opłaty bankowe</td>
+                            <td><div id="ch-expenses-tracking-limits7"></div></td>
+                            <td class="amount">6,50 <em>PLN</em> z 20,00 <em>PLN</em></td>
+
+                            <td><div><a class="link-edit showModal" title="Edytuj" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/edytuj?id=3317">Edytuj</a></div></td>
+                            <td class="last"><div><a class="link-remove" title="Usuń" href="#" rel="3317">Usuń</a></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form id="removeLimit" method="POST" action="/zarzadzanie-finansami/kontrola-wydatkow/limit/usun">
+                    <input type="hidden" name="id" />
+                    <input type="hidden" name="action" value="deleteLimitAction" />
+
+                    <input type="hidden" name="data" value="2010-08" />
+	<div class="c modal confirmModal ask">
+        <a href="#" class="closeModal">&nbsp;</a>
+        <h1>Usuwanie limitu</h1>
+        <div class="confirm">
+            <h2>Czy chcesz usunąć wybrany limit?</h2>
+            <p>&nbsp;</p>
+            <div class="buttons">
+
+                <input type="submit" value="Usuń" class="confirmOk" />
+                <input type="button" value="Anuluj" class="bleft" />
+            </div>
+        </div>
+	</div>
+                </form>
+                <hr />
+                <a class="link-add showModal" href="/zarzadzanie-finansami/kontrola-wydatkow/limit/dodaj" title="Dodaj limit">Dodaj limit</a>
+
+            </li>
+        </ul>
+    </div>
+    <hr class="bottom" />
+</div>
+
+<script type="text/javascript">
+$().ready(function() {
+	$('#removeLimit').bindSingleSubmit('.link-remove');
+    $('#ch-expenses-tracking-summary').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><background><color>EBF4F9</color><alpha>100</alpha></background><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><grid><category><alpha>0</alpha></category><value><alpha>0</alpha></value></grid><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width><balloon_text>{title}: {value} PLN</balloon_text></column><angle>0</angle><graphs><graph gid="0"><title>Wydatki zrealizowane</title><color>50859B</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Wydatki zaplanowane</title><color>95C7DC</color><visible_in_legend>0</visible_in_legend></graph><graph gid="2"><title>Oszczędności</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">2316.39</value></graph><graph gid="1"><value xid="0">465.00</value></graph><graph gid="2"><value xid="0">0.00</value></graph></graphs></chart>', '700', '44');
+    $('#ch-expenses-tracking-limits0').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">0.0</value></graph><graph gid="1"><value xid="0">200.0</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits1').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">0.0</value></graph><graph gid="1"><value xid="0">100.0</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits2').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">670.0</value></graph><graph gid="1"><value xid="0">130.0</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits3').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">342.27</value></graph><graph gid="1"><value xid="0">357.73</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits4').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value color="B61616" xid="0">291.0</value></graph><graph gid="1"><value color="B61616" xid="0">0.0</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits5').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value color="B61616" xid="0">278.49</value></graph><graph gid="1"><value color="B61616" xid="0">0.0</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits6').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">166.15</value></graph><graph gid="1"><value xid="0">333.85</value></graph></graphs></chart>', '350', '21');
+    $('#ch-expenses-tracking-limits7').ifnShowColumnChart('<settings><digits_after_decimal>2</digits_after_decimal><type>bar</type><font>segoe ui,tahoma,arial,helvetica,sans-serif</font><plot_area><margins><left>0</left><right>0</right><top>0</top><bottom>0</bottom></margins></plot_area><axes><category><alpha>0</alpha></category><value><alpha>0</alpha></value></axes><values><category><enabled>0</enabled></category><value><enabled>0</enabled><min>0</min></value></values><balloon><enabled>0</enabled></balloon><legend><enabled>0</enabled></legend><column><type>100% stacked</type><width>100</width></column><angle>0</angle><graphs><graph gid="0"><title>Zrealizowane</title><color>75AC03</color><visible_in_legend>0</visible_in_legend></graph><graph gid="1"><title>Pozostało</title><color>EBF4F9</color><visible_in_legend>0</visible_in_legend></graph></graphs></settings>', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chart><series><value xid="0"/></series><graphs><graph gid="0"><value xid="0">6.5</value></graph><graph gid="1"><value xid="0">13.5</value></graph></graphs></chart>', '350', '21');
+});
+</script>
+
+
+    <div id="mf">
+		<ul id="f-links">
+		  <li><a href="/regulamin" title="Regulamin korzystania z serwisu iFIN24">Regulamin</a></li>
+
+		  <li><a href="/o-serwisie" title="Informacje o serwisie">O serwisie</a></li>
+		  <li><a href="/funkcjonalnosci" title="Dowiedz się więcej o funkcjonalnościach iFIN24">Co oferuje iFIN24?</a></li>
+		  <li><a href="/bezpieczenstwo" title="Dowiedz się więcej o bezpieczeństwie serwisu iFIN24">Bezpieczeństwo</a></li>
+		  <li><a href="/polityka-prywatnosci" title="Polityka prywatności iFIN24">Polityka prywatności</a></li>
+		  <li><a href="http://centrumprasowe.ifin24.pl" title="Informacje dla mediów">Centrum prasowe</a></li>
+		  <li><a href="/kontakt" title="Masz uwagi? Napisz do nas">Kontakt</a></li>
+
+		</ul>
+
+        <div id="f-logo"></div>
+        <ul id="f-legal">
+            <li>Copyright &copy; 2009 iFIN24 <span><a href="http://modulus.eu/" rel="external">interface design: MODULUS</a></span></li>
+        </ul>
+	</div>
+<!-- GA -->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." :
+"http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost +
+"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8470249-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</div>
+</body>
+</html>
