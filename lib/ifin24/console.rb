@@ -10,6 +10,7 @@ class Ifin24::Console
     catch :exit do
       loop do
         choose do |menu|
+          menu.header = "Menu główne"
           menu.index = :letter
           menu.index_suffix = ") "
 
