@@ -4,14 +4,15 @@ require 'yaml'
 class Ifin24::Configuration
   include Singleton
 
+  CONFIG_FILE_NAME = File.join(ENV['HOME'], '.ifin24-client', 'config.yml')
+
   attr_reader :config
 
   def initialize
     @config = {}
     
-    config_file_name = File.join(ENV['HOME'], '.ifin24-client', 'config.yml')
-    if File.exist?(config_file_name)
-      @config = YAML.load_file(config_file_name) rescue {}
+    if File.exist?(CONFIG_FILE_NAME)
+      @config = YAML.load_file(CONFIG_FILE_NAME) rescue {}
     end
   end
 

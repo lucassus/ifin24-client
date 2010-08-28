@@ -6,8 +6,8 @@ class Ifin24::Client
   LIST_PAGE_PARAM = '?pageNumber='
 
   def initialize(login, password)
+    @login, @password = login, password
     @agent = Mechanize.new
-    login(login, password)
   end
 
   def categories
@@ -67,22 +67,24 @@ class Ifin24::Client
     return entries, total_pages
   end
 
+  def login
+    page = @agent.get(LOGIN_FORM_URL)
+    form = page.forms.first
+
+    form['login'] = @login
+    form['password'] = @password
+
+    page = form.submit
+    @logged = page.forms.first.nil?
+
+    return logged?
+  end
+
   def logged?
     @logged
   end
 
   private
-
-  def login(login, password)
-    page = @agent.get(LOGIN_FORM_URL)
-    form = page.forms.first
-
-    form['login'] = login
-    form['password'] = password
-
-    page = form.submit
-    @logged = page.forms.first.nil?
-  end
 
   def fetch_categories
     page = @agent.get(ENTRY_FORM_URL)
