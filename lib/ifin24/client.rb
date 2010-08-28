@@ -129,10 +129,9 @@ class Ifin24::Client
     return accounts
   end
 
-  # TODO implement
   def extract_entries_total_pages(page)
-#    page.search('div.pager a')
-    3
+    links = page.search('div.pager a')
+    return links[-2].text.to_i
   end
 
 end
