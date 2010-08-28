@@ -13,7 +13,8 @@ begin
     gem.homepage = "http://github.com/lucassus/ifin24-client"
     gem.authors = ["Łukasz Bandzarewicz"]
     
-    gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_development_dependency "rspec"
+    gem.add_development_dependency "mocha"
 
     gem.add_dependency "mechanize"
     gem.add_dependency "highline"

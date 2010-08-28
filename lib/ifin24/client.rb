@@ -1,13 +1,23 @@
+require 'mechanize'
+
 class Ifin24::Client
 
   LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
   ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
+  
   LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'
-  LIST_PAGE_PARAM = '?pageNumber='
+  LIMITS_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/kontrola-wydatkow'
 
   def initialize(login, password)
     @login, @password = login, password
-    @agent = Mechanize.new
+  end
+
+  def agent
+    @agent ||= Mechanize.new
+  end
+
+  def agent=(agent)
+    @agent = agent
   end
 
   def categories
@@ -19,7 +29,7 @@ class Ifin24::Client
   end
 
   def send_entry(entry)
-    page = @agent.get(ENTRY_FORM_URL)
+    page = agent.get(ENTRY_FORM_URL)
     form = page.forms.first
 
     form['entry.title'] = entry.title.to_s
@@ -34,7 +44,7 @@ class Ifin24::Client
   end
 
   def fetch_entries(curr_page = 1)
-    page = @agent.get(LIST_URL + LIST_PAGE_PARAM + curr_page.to_s)
+    page = agent.get("#{LIST_URL}?pageNumber=#{curr_page}")
     total_pages = extract_entries_total_pages(page)
     entry_row_elements = page.search('table tbody tr')
 
@@ -67,8 +77,16 @@ class Ifin24::Client
     return entries, total_pages
   end
 
+  def fetch_limits
+    page = agent.get(LIMITS_URL)
+
+    limits = {}
+
+    return limits
+  end
+
   def login
-    page = @agent.get(LOGIN_FORM_URL)
+    page = agent.get(LOGIN_FORM_URL)
     form = page.forms.first
 
     form['login'] = @login
@@ -87,7 +105,7 @@ class Ifin24::Client
   private
 
   def fetch_categories
-    page = @agent.get(ENTRY_FORM_URL)
+    page = agent.get(ENTRY_FORM_URL)
     categories_element = page.search('ul.expenseCombo>li')
 
     categories = []
@@ -114,7 +132,7 @@ class Ifin24::Client
   end
 
   def fetch_accounts
-    page = @agent.get(ENTRY_FORM_URL)
+    page = agent.get(ENTRY_FORM_URL)
     accounts_element = page.search('ul#bankAccountCombo>li')
 
     accounts = []
