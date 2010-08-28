@@ -17,6 +17,7 @@ class Ifin24::Console
           menu.choice("Dodaj wydatek") { add_expense }
           menu.choice("Lista kont") { list_accounts }
           menu.choice("Lista ostatnich transakcji") { list_entries }
+          menu.choice("Kontrola wydatków") { list_limits }
 
           menu.choice("Koniec") { throw :exit }
         end
@@ -34,6 +35,10 @@ class Ifin24::Console
 
   def list_entries
     execute_command(Ifin24::Commands::ListEntries)
+  end
+
+  def list_limits
+    execute_command(Ifin24::Commands::ListLimits)
   end
 
   private

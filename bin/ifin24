@@ -12,6 +12,9 @@ require 'ostruct'
 
 require 'ifin24'
 
+class LoginError < StandardError
+end
+
 class App
 
   def initialize(arguments)
@@ -32,11 +35,11 @@ class App
 
     begin
       client = Ifin24::Client.new(login, password)
-      client.login or raise
+      client.login or raise LoginError
 
       console = Ifin24::Console.new(client)
       console.main_menu
-    rescue
+    rescue LoginError
       puts "Zły login lub hasło."
       
       login = ask('Login: ')
