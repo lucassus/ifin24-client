@@ -4,5 +4,6 @@ module Ifin24::Models
   autoload :Account, 'ifin24/models/account'
   autoload :Category, 'ifin24/models/category'
   autoload :Entry, 'ifin24/models/entry'
+  autoload :Limit, 'ifin24/models/limit'
 
 end

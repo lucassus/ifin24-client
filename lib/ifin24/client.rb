@@ -80,7 +80,25 @@ class Ifin24::Client
   def fetch_limits
     page = agent.get(LIMITS_URL)
 
-    limits = {}
+    limits = []
+
+    table = page.search('table#expenses-tracking-limits tbody')
+    table.search('tr').each do |tr|
+      limit = Ifin24::Models::Limit.new
+      columns = tr.search('td')
+
+      name_column = columns[0]
+      limit.name = name_column.text.strip
+
+      amounts_column = columns[2]
+      match = amounts_column.text.strip.match(/^(?<amount>\d+,\d+) PLN z (?<max>\d+,\d+) PLN$/)
+      if match
+        limit.amount = sanitize_price(match['amount'])
+        limit.max = sanitize_price(match['max'])
+      end
+
+      limits << limit
+    end
 
     return limits
   end
@@ -150,6 +168,11 @@ class Ifin24::Client
   def extract_entries_total_pages(page)
     links = page.search('div.pager a')
     return links[-2].text.to_i
+  end
+
+  def sanitize_price(price)
+    return 0.0 if price.nil?
+    return price.strip.gsub(',', '.').to_f
   end
 
 end
