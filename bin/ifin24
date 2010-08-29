@@ -6,6 +6,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rubygems'
 require 'mechanize'
 require 'highline/import'
+require 'rainbow'
 
 require 'optparse'
 require 'ostruct'

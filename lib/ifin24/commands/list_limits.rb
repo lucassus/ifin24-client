@@ -18,12 +18,13 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
   private
 
   def make_limit_bar(amount, max)
+    limit_exceeded = amount >= max
     amount = [amount, max].min
     taken = ((amount / max) * LIMIT_BAR_SIZE).to_i
 
     bar = "["
     taken.times do
-      bar << "#"
+      bar << "#".color(limit_exceeded ? :red : :green)
     end
 
     (LIMIT_BAR_SIZE - taken).times do

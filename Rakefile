@@ -18,6 +18,7 @@ begin
 
     gem.add_dependency "mechanize"
     gem.add_dependency "highline"
+    gem.add_dependency "rainbow"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
