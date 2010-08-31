@@ -18,7 +18,7 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
       menu.choice("Wyślij") do
         puts "Wysyłanie danych..."
         @client.send_entry(entry)
-        throw :all_ok
+        throw :exit
       end
     end
   end
