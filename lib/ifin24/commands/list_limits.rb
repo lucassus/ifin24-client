@@ -1,18 +1,28 @@
 # encoding: utf-8
 
 class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
-  LIMIT_BAR_SIZE = 50
+  LIMIT_BAR_SIZE = 64
 
   def execute
     limits = @client.fetch_limits
+    widest_name_size = limits.map { |l| l.name }.inject(0) { |max, name| name.size >= max ? name.size : max }
+
     limits.each do |limit|
-      widest_name_size = limits.map { |l| l.name }.inject(0) { |max, name| name.size >= max ? name.size : max }
       name = limit.name.ljust(widest_name_size)
       limit_bar = make_limit_bar(limit.amount, limit.max)
-      amount = "#{limit.amount}zł z #{limit.max}zł"
+      amount_summary = "#{limit.amount}zł z #{limit.max}zł"
 
-      puts "#{name} #{limit_bar} #{amount}"
+      puts "#{name} #{limit_bar} #{amount_summary}"
     end
+
+    total_amount = limits.inject(0) { |sum, limit| sum += limit.amount }
+    total_max = limits.inject(0) { |sum, limit| sum += limit.max }
+
+    total_name = 'Podsumowanie:'.ljust(widest_name_size)
+    total_limit_bar = make_limit_bar(total_amount, total_max)
+    total_amount_summary = "#{total_amount}zł z #{total_max}zł"
+
+    puts "\n#{total_name} #{total_limit_bar} #{total_amount_summary}"
   end
 
   private
