@@ -3,11 +3,11 @@ require 'mechanize'
 class Ifin24::Client
   include Ifin24::Models
 
-  LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
-  ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
+  LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'.freeze
+  ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'.freeze
   
-  LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'
-  LIMITS_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/kontrola-wydatkow'
+  LIST_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/lista'.freeze
+  LIMITS_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/kontrola-wydatkow'.freeze
 
   def initialize(login, password)
     @login, @password = login, password
@@ -78,8 +78,14 @@ class Ifin24::Client
     return entries, total_pages
   end
 
-  def fetch_limits
-    page = agent.get(LIMITS_URL)
+  def fetch_limits(date = nil)
+    limits_url = "#{LIMITS_URL}"
+    if date
+      date = date.is_a?(Date) ? date.strftime("%Y-%m") : date
+      limits_url << "?data=#{date}"
+    end
+
+    page = agent.get(limits_url)
 
     limits = []
 

@@ -4,7 +4,39 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
   LIMIT_BAR_SIZE = 64
 
   def execute
-    limits = @client.fetch_limits
+    curr_date = Date.today
+    limits = @client.fetch_limits(curr_date)
+    print_report(limits)
+
+    catch :exit do
+      loop do
+        choose do |menu|
+          menu.index = :letter
+          menu.index_suffix = ") "
+
+          menu.choice("Poprzedni miesiąć") do
+            curr_date = curr_date << 1
+
+            limits = @client.fetch_limits(curr_date)
+            print_report(limits)
+          end
+
+          menu.choice("Następny miesiąc") do
+            curr_date = curr_date >> 1
+
+            limits = @client.fetch_limits(curr_date)
+            print_report(limits)
+          end
+
+          menu.choice("Powrót do głównego menu") { throw :exit }
+        end
+      end
+    end
+  end
+
+  private
+
+  def print_report(limits)
     widest_name_size = limits.inject(0) { |max, limit| limit.name.size >= max ? limit.name.size : max }
 
     limits.each do |limit|
@@ -24,8 +56,6 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
 
     puts "\n#{total_name} #{total_limit_bar} #{total_amount_summary}"
   end
-
-  private
 
   def make_limit_bar(amount, max)
     limit_exceeded = amount >= max
