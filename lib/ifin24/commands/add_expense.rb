@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
+  include Ifin24::Models
 
   def execute
     entry = get_entry
@@ -36,7 +37,7 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
   private
 
   def get_entry
-    entry = Ifin24::Models::Entry.new
+    entry = Entry.new
 
     get_title_for(entry)
     get_date_for(entry)

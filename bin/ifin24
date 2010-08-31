@@ -12,6 +12,7 @@ require 'optparse'
 require 'ostruct'
 
 require 'ifin24'
+include Ifin24
 
 class LoginError < StandardError
 end
@@ -30,15 +31,15 @@ class App
   def run
     parse_options!
 
-    config = Ifin24::Configuration.instance
+    config = Configuration.instance
     login = @options.login || config[:login]
     password = @options.password || config[:password]
 
     begin
-      client = Ifin24::Client.new(login, password)
+      client = Client.new(login, password)
       client.login or raise LoginError
 
-      console = Ifin24::Console.new(client)
+      console = Console.new(client)
       console.main_menu
     rescue LoginError
       puts "Zły login lub hasło."

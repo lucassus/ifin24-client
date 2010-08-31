@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class Ifin24::Console
+  include Ifin24
 
   def initialize(client)
     @client = client
@@ -26,19 +27,19 @@ class Ifin24::Console
   end
 
   def add_expense
-    execute_command(Ifin24::Commands::AddExpense)
+    execute_command(Commands::AddExpense)
   end
 
   def list_accounts
-    execute_command(Ifin24::Commands::ListAccounts)
+    execute_command(Commands::ListAccounts)
   end
 
   def list_entries
-    execute_command(Ifin24::Commands::ListEntries)
+    execute_command(Commands::ListEntries)
   end
 
   def list_limits
-    execute_command(Ifin24::Commands::ListLimits)
+    execute_command(Commands::ListLimits)
   end
 
   private

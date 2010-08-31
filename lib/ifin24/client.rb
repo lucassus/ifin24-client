@@ -1,6 +1,7 @@
 require 'mechanize'
 
 class Ifin24::Client
+  include Ifin24::Models
 
   LOGIN_FORM_URL = 'https://www.ifin24.pl/logowanie'
   ENTRY_FORM_URL = 'https://www.ifin24.pl/zarzadzanie-finansami/transakcje/dodaj-wydatek'
@@ -54,7 +55,7 @@ class Ifin24::Client
       entry_elements = entry_row_element.search('td')
       next if entry_elements.size != 5
 
-      entry = Ifin24::Models::Entry.new
+      entry = Entry.new
 
       title_column = entry_elements[2]
       entry.title = title_column.children[0].text.strip
@@ -64,7 +65,7 @@ class Ifin24::Client
       entry.date = date_column.text.strip
 
       category_column = entry_elements[3]
-      sub_category = Ifin24::Models::Category.new(:name => category_column.children[0].text.strip)
+      sub_category = Category.new(:name => category_column.children[0].text.strip)
       entry.sub_category = sub_category
         
       entry.tags = category_column.search('span').text.strip
@@ -84,7 +85,7 @@ class Ifin24::Client
 
     table = page.search('table#expenses-tracking-limits tbody')
     table.search('tr').each do |tr|
-      limit = Ifin24::Models::Limit.new
+      limit = Limit.new
       columns = tr.search('td')
 
       name_column = columns[0]
@@ -132,14 +133,14 @@ class Ifin24::Client
       next if category_without_children
 
       category_name = category_elem.children[0].text.strip
-      category = Ifin24::Models::Category.new(:name => category_name)
+      category = Category.new(:name => category_name)
       children_element = category_elem.children[1].children.search('li')
 
       children_element.each do |child_elem|
         child_id = child_elem.attributes['rel'].value
         child_name = child_elem.text.strip
 
-        child = Ifin24::Models::Category.new(:id => child_id, :name => child_name)
+        child = Category.new(:id => child_id, :name => child_name)
         category.children << child
       end
 
@@ -159,7 +160,7 @@ class Ifin24::Client
       next if id == '0' # skip the prompt
       name = account_elem.text.strip
 
-      accounts << Ifin24::Models::Account.new(:id => id, :name => name)
+      accounts << Account.new(:id => id, :name => name)
     end
 
     return accounts
