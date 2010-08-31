@@ -9,7 +9,7 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
     print_report(limits)
 
     console_menu('Powrót do głównego menu') do |menu|
-      menu.choice("Poprzedni miesiąć") do
+      menu.choice("Poprzedni miesiąc") do
         curr_date = curr_date << 1
 
         limits = @client.fetch_limits(curr_date)
