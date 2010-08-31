@@ -5,7 +5,7 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
 
   def execute
     limits = @client.fetch_limits
-    widest_name_size = limits.map { |l| l.name }.inject(0) { |max, name| name.size >= max ? name.size : max }
+    widest_name_size = limits.inject(0) { |max, limit| limit.name.size >= max ? limit.name.size : max }
 
     limits.each do |limit|
       name = limit.name.ljust(widest_name_size)
