@@ -6,30 +6,19 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
   def execute
     entry = get_entry
 
-    catch :all_ok do
-      loop do
-        choose do |menu|
-          menu.index = :letter
-          menu.index_suffix = ") "
+    console_menu('Powrót do głównego menu') do |menu|
+      menu.choice("Nazwa: #{entry.title}") { get_title_for(entry) }
+      menu.choice("Data: #{entry.date}") { get_date_for(entry) }
+      menu.choice("Konto: #{entry.account.name}") { get_account_for(entry) }
+      menu.choice("Kategoria: #{entry.category_full_name}") { get_category_for(entry) }
+      menu.choice("Kwota: #{entry.amount}") { get_amount_for(entry) }
+      menu.choice("Tagi: #{entry.tags}") { get_tags_for(entry) }
+      menu.choice("Opis: #{entry.note}") { get_note_for(entry) }
 
-          menu.choice("Nazwa: #{entry.title}") { get_title_for(entry) }
-          menu.choice("Data: #{entry.date}") { get_date_for(entry) }
-          menu.choice("Konto: #{entry.account.name}") { get_account_for(entry) }
-          menu.choice("Kategoria: #{entry.category_full_name}") { get_category_for(entry) }
-          menu.choice("Kwota: #{entry.amount}") { get_amount_for(entry) }
-          menu.choice("Tagi: #{entry.tags}") { get_tags_for(entry) }
-          menu.choice("Opis: #{entry.note}") { get_note_for(entry) }
-
-          menu.choice("Powrót do głównego menu") do
-            throw :all_ok
-          end
-
-          menu.choice("Wyślij") do
-            puts "Wysyłanie danych..."
-            @client.send_entry(entry)
-            throw :all_ok
-          end
-        end
+      menu.choice("Wyślij") do
+        puts "Wysyłanie danych..."
+        @client.send_entry(entry)
+        throw :all_ok
       end
     end
   end

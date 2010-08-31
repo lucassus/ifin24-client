@@ -2,27 +2,20 @@
 
 class Ifin24::Console
   include Ifin24
+  include Helpers::Menu
 
   def initialize(client)
     @client = client
   end
 
   def main_menu
-    catch :exit do
-      loop do
-        choose do |menu|
-          menu.header = "Menu główne"
-          menu.index = :letter
-          menu.index_suffix = ") "
+    console_menu('Koniec') do |menu|
+      menu.header = "Menu główne"
 
-          menu.choice("Dodaj wydatek") { add_expense }
-          menu.choice("Lista kont") { list_accounts }
-          menu.choice("Lista ostatnich transakcji") { list_entries }
-          menu.choice("Kontrola wydatków") { list_limits }
-
-          menu.choice("Koniec") { throw :exit }
-        end
-      end
+      menu.choice("Dodaj wydatek") { add_expense }
+      menu.choice("Lista kont") { list_accounts }
+      menu.choice("Lista ostatnich transakcji") { list_entries }
+      menu.choice("Kontrola wydatków") { list_limits }
     end
   end
 

@@ -8,28 +8,19 @@ class Ifin24::Commands::ListLimits < Ifin24::Commands::Base
     limits = @client.fetch_limits(curr_date)
     print_report(limits)
 
-    catch :exit do
-      loop do
-        choose do |menu|
-          menu.index = :letter
-          menu.index_suffix = ") "
+    console_menu('Powrót do głównego menu') do |menu|
+      menu.choice("Poprzedni miesiąć") do
+        curr_date = curr_date << 1
 
-          menu.choice("Poprzedni miesiąć") do
-            curr_date = curr_date << 1
+        limits = @client.fetch_limits(curr_date)
+        print_report(limits)
+      end
 
-            limits = @client.fetch_limits(curr_date)
-            print_report(limits)
-          end
+      menu.choice("Następny miesiąc") do
+        curr_date = curr_date >> 1
 
-          menu.choice("Następny miesiąc") do
-            curr_date = curr_date >> 1
-
-            limits = @client.fetch_limits(curr_date)
-            print_report(limits)
-          end
-
-          menu.choice("Powrót do głównego menu") { throw :exit }
-        end
+        limits = @client.fetch_limits(curr_date)
+        print_report(limits)
       end
     end
   end
