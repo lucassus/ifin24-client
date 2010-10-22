@@ -44,9 +44,24 @@ class Ifin24::Commands::AddExpense < Ifin24::Commands::Base
   end
 
   def get_date_for(entry)
-    curr_date = Date.today
-    entry.date = ask('Data: ') do |q|
-      q.default = curr_date
+    choose do |menu|
+      menu.prompt = 'Data: '
+
+      today = Date.today
+      menu.choice(today) do
+        entry.date = today
+      end
+
+      yesterday = today - 1
+      menu.choice(yesterday) do
+        entry.date = yesterday
+      end
+
+      menu.choice('Inna data') do
+        entry.date = ask('Data: ') do |q|
+          q.default = Date.today
+        end
+      end
     end
   end
 
